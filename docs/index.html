@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File to Video Encoder - Documentação Completa</title>
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --danger: #f44336;
+            --dark: #1a1a2e;
+            --light: #f5f5f5;
+            --code-bg: #282a36;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 60px 20px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+
+        .badge-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Navigation */
+        .nav {
+            background: white;
+            border-radius: 50px;
+            padding: 10px 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+        }
+
+        .nav a {
+            color: var(--dark);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 25px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .nav a:hover {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        /* Content Cards */
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            color: var(--dark);
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid;
+            border-image: linear-gradient(135deg, var(--primary), var(--secondary)) 1;
+            font-size: 2rem;
+        }
+
+        h3 {
+            color: var(--dark);
+            margin: 25px 0 15px;
+            font-size: 1.5rem;
+        }
+
+        h4 {
+            color: var(--dark);
+            margin: 20px 0 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Code Blocks */
+        pre {
+            background: var(--code-bg);
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', 'Fira Code', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: var(--danger);
+        }
+
+        pre code {
+            background: transparent;
+            color: inherit;
+            padding: 0;
+        }
+
+        /* Syntax Highlighting */
+        .keyword { color: #ff79c6; }
+        .string { color: #f1fa8c; }
+        .comment { color: #6272a4; }
+        .function { color: #50fa7b; }
+        .number { color: #bd93f9; }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        /* Plugin Cards */
+        .plugin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .plugin-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .plugin-card:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .plugin-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .plugin-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .plugin-desc {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .plugin-meta {
+            display: flex;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .plugin-signature {
+            background: var(--code-bg);
+            color: #50fa7b;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        /* Alerts */
+        .alert {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            border: 1px solid #ffeeba;
+            color: #856404;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+
+        /* Steps */
+        .step-list {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 20px;
+            padding-left: 50px;
+            position: relative;
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: white;
+            opacity: 0.8;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .nav {
+                border-radius: 20px;
+            }
+        }
+
+        /* Copy button */
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .code-block {
+            position: relative;
+        }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 15px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🎥 File to Video Encoder</h1>
+            <p>Transforme qualquer arquivo em vídeo e recupere depois!</p>
+            <div class="badge-container">
+                <span class="badge">v4.0.0</span>
+                <span class="badge">Python 3.8+</span>
+                <span class="badge">Streamlit</span>
+                <span class="badge">OpenCV</span>
+                <span class="badge">Arquitetura de Plugins Dinâmica</span>
+                <span class="badge">Sistema de Assinatura</span>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <a href="#sobre">📖 Sobre</a>
+            <a href="#instalacao">⚙️ Instalação</a>
+            <a href="#execucao">🚀 Execução</a>
+            <a href="#plugins">🔌 Plugins</a>
+            <a href="#assinatura">🔐 Assinatura</a>
+            <a href="#desenvolvimento">💻 Desenvolvimento</a>
+            <a href="#api">📚 API</a>
+            <a href="#metricas">📊 Métricas</a>
+            <a href="#deploy">☁️ Deploy</a>
+        </nav>
+
+        <!-- Sobre -->
+        <section id="sobre" class="content">
+            <h2>📖 Sobre o Projeto</h2>
+            <p>
+                <strong>File to Video Encoder</strong> é uma ferramenta inovadora que permite codificar 
+                qualquer arquivo binário em um vídeo visual, e posteriormente decodificá-lo de volta 
+                ao arquivo original com verificação de integridade.
+            </p>
+            
+            <h3>🎯 Características Principais</h3>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🔌</div>
+                    <strong>Arquitetura de Plugins</strong>
+                    <p style="font-size: 0.9rem; margin-top: 5px;">Sistema dinâmico que descobre automaticamente novos encoders</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔐</div>
+                    <strong>Assinatura Digital</strong>
+                    <p style="font-size: 0.9rem; margin-top: 5px;">Cada encoder tem assinatura única nos primeiros pixels</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📊</div>
+                    <strong>Métricas em Tempo Real</strong>
+                    <p style="font-size: 0.9rem; margin-top: 5px;">Tamanho, taxa de compressão e tempo de processamento</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📜</div>
+                    <strong>Histórico de Ações</strong>
+                    <p style="font-size: 0.9rem; margin-top: 5px;">Registro de todas as codificações e decodificações</p>
+                </div>
+            </div>
+
+            <h3>🏗️ Estrutura do Projeto</h3>
+            <pre><code>Encoder_video/
+├── app_streamlit.py          # Interface principal
+├── encoders/                 # Pasta de plugins (dinâmica)
+│   ├── __init__.py          # Detector automático de plugins
+│   ├── base_encoder.py      # Classe base abstrata + EncoderRegistry
+│   ├── rgb_squares/         # Plugin RGB Tabuleiro
+│   │   ├── __init__.py
+│   │   ├── encoder.py
+│   │   └── decoder.py
+│   ├── yuv_bars/            # Plugin YUV Barras
+│   │   ├── __init__.py
+│   │   ├── encoder.py
+│   │   └── decoder.py
+│   ├── qr_sequence/         # Plugin QR Code
+│   │   ├── __init__.py
+│   │   ├── encoder.py
+│   │   └── decoder.py
+│   └── rgb_fast/            # Plugin RGB FAST
+│       ├── __init__.py
+│       ├── encoder.py
+│       └── decoder.py
+├── utils/                    # Utilitários
+│   ├── __init__.py
+│   ├── audio_utils.py
+│   └── video_utils.py
+├── docs/                     # Documentação
+│   └── index.html
+├── requirements.txt          # Dependências
+└── README.md</code></pre>
+        </section>
+
+        <!-- Instalação -->
+        <section id="instalacao" class="content">
+            <h2>⚙️ Instalação</h2>
+            
+            <h3>📋 Pré-requisitos</h3>
+            <ul style="margin-left: 20px;">
+                <li>Python 3.8 ou superior</li>
+                <li>pip (gerenciador de pacotes Python)</li>
+                <li>FFmpeg (opcional, para áudio)</li>
+            </ul>
+
+            <h3>📦 Dependências</h3>
+            <p>Arquivo <code>requirements.txt</code>:</p>
+            <pre><code>streamlit>=1.28.0
+opencv-python>=4.8.0
+numpy>=1.24.0
+scipy>=1.10.0
+qrcode>=7.4.0
+pillow>=10.0.0
+pyzbar>=0.1.9</code></pre>
+
+            <h3>🔧 Passos de Instalação</h3>
+            <ol class="step-list" style="margin-left: 20px;">
+                <li>
+                    <strong>Clone o repositório</strong>
+                    <pre><code>git clone https://github.com/euclidesjunior18/encoder_arq4video.git
+cd file-to-video-encoder</code></pre>
+                </li>
+                <li>
+                    <strong>Crie um ambiente virtual (recomendado)</strong>
+                    <pre><code># Windows
+python -m venv venv
+venv\Scripts\activate
+
+# Linux/Mac
+python3 -m venv venv
+source venv/bin/activate</code></pre>
+                </li>
+                <li>
+                    <strong>Instale as dependências</strong>
+                    <pre><code>pip install -r requirements.txt</code></pre>
+                </li>
+            </ol>
+        </section>
+
+        <!-- Execução -->
+        <section id="execucao" class="content">
+            <h2>🚀 Execução</h2>
+            
+            <h3>▶️ Iniciar o Aplicativo</h3>
+            <pre><code>streamlit run app_streamlit.py</code></pre>
+            
+            <p>O aplicativo abrirá automaticamente em:</p>
+            <pre><code>http://localhost:8501</code></pre>
+
+            <h3>📤 Como Usar - Encoder</h3>
+            <ol style="margin-left: 20px;">
+                <li>Acesse a aba <strong>Encoder</strong></li>
+                <li>Faça upload do arquivo que deseja codificar</li>
+                <li>Escolha o método de codificação na barra lateral</li>
+                <li>Clique em <strong>"Iniciar Codificação"</strong></li>
+                <li>Acompanhe as métricas em tempo real</li>
+                <li>Baixe o vídeo gerado</li>
+            </ol>
+
+            <h3>📥 Como Usar - Decoder</h3>
+            <ol style="margin-left: 20px;">
+                <li>Acesse a aba <strong>Decoder</strong></li>
+                <li>Faça upload do vídeo codificado ou use o último vídeo gerado</li>
+                <li>O sistema identifica automaticamente o formato pela assinatura</li>
+                <li>Clique em <strong>"Decodificar"</strong></li>
+                <li>Baixe o arquivo recuperado</li>
+            </ol>
+        </section>
+
+        <!-- Plugins -->
+        <section id="plugins" class="content">
+            <h2>🔌 Plugins Disponíveis</h2>
+            
+            <div class="plugin-grid">
+                <div class="plugin-card">
+                    <div class="plugin-icon">🎨</div>
+                    <div class="plugin-name">RGB Tabuleiro</div>
+                    <div class="plugin-desc">Padrão de tabuleiro colorido. Cada célula armazena 3 bytes (RGB). Visual artístico.</div>
+                    <div class="plugin-meta">
+                        <span>📦 AVI</span>
+                        <span>🎨 3 bytes/pixel</span>
+                        <span class="plugin-signature">RGB1</span>
+                    </div>
+                </div>
+
+                <div class="plugin-card">
+                    <div class="plugin-icon">📊</div>
+                    <div class="plugin-name">YUV Barras</div>
+                    <div class="plugin-desc">Barras de luminância em escala de cinza. Mais rápido e compacto.</div>
+                    <div class="plugin-meta">
+                        <span>📦 AVI</span>
+                        <span>⚡ 1 byte/pixel</span>
+                        <span class="plugin-signature">YUV1</span>
+                    </div>
+                </div>
+
+                <div class="plugin-card">
+                    <div class="plugin-icon">📱</div>
+                    <div class="plugin-name">QR Code Sequence</div>
+                    <div class="plugin-desc">Sequência de QR Codes. Resistente à compressão do YouTube.</div>
+                    <div class="plugin-meta">
+                        <span>📦 AVI</span>
+                        <span>🔐 Reed-Solomon</span>
+                        <span class="plugin-signature">QRC1</span>
+                    </div>
+                </div>
+
+                <div class="plugin-card">
+                    <div class="plugin-icon">⚡</div>
+                    <div class="plugin-name">RGB FAST</div>
+                    <div class="plugin-desc">Compressão zlib + redundância. YouTube Proof e ultra rápido.</div>
+                    <div class="plugin-meta">
+                        <span>📦 MP4</span>
+                        <span>🗜️ zlib</span>
+                        <span class="plugin-signature">FST1</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <strong>💡 Sistema de Plugins Dinâmico:</strong> Para adicionar um novo encoder, basta criar uma pasta em <code>encoders/</code> com <code>encoder.py</code> contendo uma classe que herda de <code>BaseEncoder</code>. O sistema descobre automaticamente!
+            </div>
+        </section>
+
+        <!-- Sistema de Assinatura -->
+        <section id="assinatura" class="content">
+            <h2>🔐 Sistema de Identificação por Assinatura</h2>
+            
+            <p>
+                Cada encoder possui uma <strong>assinatura única de 4 bytes</strong> que é embutida 
+                nos primeiros pixels (canto superior esquerdo, 2x2 pixels) de cada frame do vídeo.
+                Isso permite a identificação automática do formato durante a decodificação.
+            </p>
+
+            <h3>🔍 Como Funciona</h3>
+            <ol style="margin-left: 20px;">
+                <li>O encoder define uma assinatura única (ex: <code>b'RGB1'</code>)</li>
+                <li>Durante a codificação, a assinatura é embutida nos pixels 2x2 do canto superior esquerdo</li>
+                <li>Na decodificação, o sistema extrai esses pixels e compara com as assinaturas registradas</li>
+                <li>O encoder correspondente é automaticamente selecionado para decodificação</li>
+            </ol>
+
+            <h3>📋 Assinaturas Registradas</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Encoder</th>
+                        <th>Assinatura</th>
+                        <th>Bytes (Hex)</th>
+                        <th>Visual (2x2 pixels)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>🎨 RGB Tabuleiro</td>
+                        <td><code>b'RGB1'</code></td>
+                        <td><code>52 47 42 31</code></td>
+                        <td style="background: #2d2d2d;">
+                            <div style="display: flex; gap: 2px;">
+                                <div style="width: 20px; height: 20px; background: #52; border: 1px solid #666;"></div>
+                                <div style="width: 20px; height: 20px; background: #47; border: 1px solid #666;"></div>
+                                <div style="width: 20px; height: 20px; background: #42; border: 1px solid #666;"></div>
+                                <div style="width: 20px; height: 20px; background: #31; border: 1px solid #666;"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>📊 YUV Barras</td>
+                        <td><code>b'YUV1'</code></td>
+                        <td><code>59 55 56 31</code></td>
+                        <td style="background: #2d2d2d;">
+                            <div style="display: flex; gap: 2px;">
+                                <div style="width: 20px; height: 20px; background: #59; border: 1px solid #666;"></div>
+                                <div style="width: 20px; height: 20px; background: #55; border: 1px solid #666;"></div>
+                                <div style="width: 20px; height: 20px; background: #56; border: 1px solid #666;"></div>
+                                <div style="width: 20px; height: 20px; background: #31; border: 1px solid #666;"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>📱 QR Code Sequence</td>
+                        <td><code>b'QRC1'</code></td>
+                        <td><code>51 52 43 31</code></td>
+                        <td style="background: #2d2d2d;">
+                            <div style="display: flex; gap: 2px;">
+                                <div style="width: 20px; height: 20px; background: #51; border: 1px solid #666;"></div>
+                                <div style="width: 20px; height: 20px; background: #52; border: 1px solid #666;"></div>
+                                <div style="width: 20px; height: 20px; background: #43; border: 1px solid #666;"></div>
+                                <div style="width: 20px; height: 20px; background: #31; border: 1px solid #666;"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>⚡ RGB FAST</td>
+                        <td><code>b'FST1'</code></td>
+                        <td><code>46 53 54 31</code></td>
+                        <td style="background: #2d2d2d;">
+                            <div style="display: flex; gap: 2px;">
+                                <div style="width: 20px; height: 20px; background: #46; border: 1px solid #666;"></div>
+                                <div style="width: 20px; height: 20px; background: #53; border: 1px solid #666;"></div>
+                                <div style="width: 20px; height: 20px; background: #54; border: 1px solid #666;"></div>
+                                <div style="width: 20px; height: 20px; background: #31; border: 1px solid #666;"></div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Desenvolvimento -->
+        <section id="desenvolvimento" class="content">
+            <h2>💻 Desenvolvimento de Plugins</h2>
+            
+            <h3>📝 Criando um Novo Encoder</h3>
+            <p>Para adicionar um novo método de codificação, siga estes passos:</p>
+            
+            <ol style="margin-left: 20px;">
+                <li>Crie uma pasta em <code>encoders/meu_encoder/</code></li>
+                <li>Crie <code>encoder.py</code> com uma classe herdando <code>BaseEncoder</code></li>
+                <li>Crie <code>__init__.py</code> exportando a classe</li>
+                <li>(Opcional) Crie <code>decoder.py</code> com a função de decode</li>
+            </ol>
+
+            <h4>Exemplo de Encoder</h4>
+            <pre><code><span class="keyword">from</span> encoders.base_encoder <span class="keyword">import</span> BaseEncoder
+<span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+<span class="keyword">class</span> <span class="function">MeuEncoder</span>(BaseEncoder):
+    
+    <span class="comment"># Propriedades obrigatórias</span>
+    <span class="keyword">@property</span>
+    <span class="keyword">def</span> <span class="function">name</span>(self) -> str:
+        <span class="keyword">return</span> <span class="string">"meu_encoder"</span>
+    
+    <span class="keyword">@property</span>
+    <span class="keyword">def</span> <span class="function">display_name</span>(self) -> str:
+        <span class="keyword">return</span> <span class="string">"🎯 Meu Encoder"</span>
+    
+    <span class="keyword">@property</span>
+    <span class="keyword">def</span> <span class="function">description</span>(self) -> str:
+        <span class="keyword">return</span> <span class="string">"Descrição do meu método"</span>
+    
+    <span class="keyword">@property</span>
+    <span class="keyword">def</span> <span class="function">icon</span>(self) -> str:
+        <span class="keyword">return</span> <span class="string">"🎯"</span>
+    
+    <span class="keyword">@property</span>
+    <span class="keyword">def</span> <span class="function">output_extension</span>(self) -> str:
+        <span class="keyword">return</span> <span class="string">"avi"</span>
+    
+    <span class="keyword">@property</span>
+    <span class="keyword">def</span> <span class="function">mime_type</span>(self) -> str:
+        <span class="keyword">return</span> <span class="string">"video/avi"</span>
+    
+    <span class="keyword">@property</span>
+    <span class="keyword">def</span> <span class="function">signature</span>(self) -> bytes:
+        <span class="keyword">return</span> <span class="string">b'MEU1'</span>  <span class="comment"># Assinatura única de 4 bytes</span>
+    
+    <span class="keyword">def</span> <span class="function">encode</span>(self, data, file_path, progress_callback):
+        <span class="comment"># Implemente a codificação</span>
+        <span class="keyword">pass</span>
+    
+    <span class="keyword">def</span> <span class="function">decode</span>(self, video_data):
+        <span class="comment"># Implemente a decodificação</span>
+        <span class="keyword">pass</span></code></pre>
+
+            <div class="alert alert-success">
+                <strong>✅ Pronto!</strong> O sistema descobre automaticamente o novo plugin na próxima execução!
+            </div>
+        </section>
+
+        <!-- API -->
+        <section id="api" class="content">
+            <h2>📚 API Reference</h2>
+            
+            <h3>🔌 BaseEncoder</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Propriedade/Método</th>
+                        <th>Tipo</th>
+                        <th>Descrição</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>name</code></td>
+                        <td>property</td>
+                        <td>Identificador único do encoder</td>
+                    </tr>
+                    <tr>
+                        <td><code>display_name</code></td>
+                        <td>property</td>
+                        <td>Nome exibido na interface</td>
+                    </tr>
+                    <tr>
+                        <td><code>signature</code></td>
+                        <td>property</td>
+                        <td>Assinatura única de 4 bytes</td>
+                    </tr>
+                    <tr>
+                        <td><code>encode()</code></td>
+                        <td>method</td>
+                        <td>Codifica dados em vídeo</td>
+                    </tr>
+                    <tr>
+                        <td><code>decode()</code></td>
+                        <td>method</td>
+                        <td>Decodifica vídeo para dados</td>
+                    </tr>
+                    <tr>
+                        <td><code>can_decode()</code></td>
+                        <td>method</td>
+                        <td>Verifica assinatura no vídeo</td>
+                    </tr>
+                    <tr>
+                        <td><code>embed_signature()</code></td>
+                        <td>method</td>
+                        <td>Embute assinatura nos pixels</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>📦 EncoderRegistry</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Descrição</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>register(encoder_class)</code></td>
+                        <td>Registra um encoder no sistema</td>
+                    </tr>
+                    <tr>
+                        <td><code>identify(video_data)</code></td>
+                        <td>Identifica formato pela assinatura</td>
+                    </tr>
+                    <tr>
+                        <td><code>list_registered()</code></td>
+                        <td>Lista todos os encoders registrados</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>🔧 Funções Utilitárias</h3>
+            <pre><code><span class="comment"># encoders/__init__.py</span>
+<span class="keyword">def</span> <span class="function">discover_encoders</span>() -> Dict[str, Type[BaseEncoder]]
+<span class="keyword">def</span> <span class="function">list_available_encoders</span>() -> List[Dict]
+<span class="keyword">def</span> <span class="function">identify_video_format</span>(video_data: bytes) -> BaseEncoder
+<span class="keyword">def</span> <span class="function">decode_video_auto</span>(video_data: bytes) -> Optional[bytes]</code></pre>
+        </section>
+
+        <!-- Métricas -->
+        <section id="metricas" class="content">
+            <h2>📊 Sistema de Métricas e Histórico</h2>
+            
+            <h3>📈 Métricas em Tempo Real</h3>
+            <ul style="margin-left: 20px;">
+                <li><strong>Tamanho Original:</strong> Tamanho do arquivo antes da codificação</li>
+                <li><strong>Tamanho do Vídeo:</strong> Tamanho do vídeo gerado</li>
+                <li><strong>Taxa de Expansão:</strong> Relação entre tamanho do vídeo e original</li>
+                <li><strong>Tempo de Processamento:</strong> Duração da codificação/decodificação</li>
+            </ul>
+
+            <h3>📜 Histórico de Ações</h3>
+            <p>O sistema mantém um histórico das últimas 20 ações, incluindo:</p>
+            <ul style="margin-left: 20px;">
+                <li>Tipo de ação (encode/decode)</li>
+                <li>Método utilizado</li>
+                <li>Nome do arquivo</li>
+                <li>Tamanhos antes e depois</li>
+                <li>Tempo de processamento</li>
+                <li>Timestamp</li>
+            </ul>
+        </section>
+
+        <!-- Deploy -->
+        <section id="deploy" class="content">
+            <h2>☁️ Deploy</h2>
+            
+            <h3>🚀 Streamlit Cloud (Recomendado)</h3>
+            <ol style="margin-left: 20px;">
+                <li>Crie uma conta no <a href="https://streamlit.io/cloud" target="_blank">Streamlit Cloud</a></li>
+                <li>Conecte seu repositório GitHub</li>
+                <li>Selecione o arquivo <code>app_streamlit.py</code></li>
+                <li>Clique em Deploy</li>
+            </ol>
+
+            <h3>🐳 Docker</h3>
+            <pre><code><span class="keyword">FROM</span> python:3.11-slim
+
+<span class="keyword">WORKDIR</span> /app
+
+<span class="keyword">COPY</span> requirements.txt .
+<span class="keyword">RUN</span> pip install --no-cache-dir -r requirements.txt
+
+<span class="keyword">COPY</span> . .
+
+<span class="keyword">EXPOSE</span> 8501
+
+<span class="keyword">CMD</span> ["streamlit", "run", "app_streamlit.py", "--server.port=8501", "--server.address=0.0.0.0"]</code></pre>
+            
+            <pre><code>docker build -t file-to-video-encoder .
+docker run -p 8501:8501 file-to-video-encoder</code></pre>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>🎥 File to Video Encoder v4.0.0</p>
+            <p>Arquitetura de Plugins Dinâmica | Sistema de Assinatura | Métricas em Tempo Real</p>
+            <p>
+                <a href="#">GitHub</a> • 
+                <a href="#">Documentação</a> • 
+                <a href="#">Reportar Bug</a>
+            </p>
+            <p style="margin-top: 20px; font-size: 0.9rem;">
+                MIT License • Feito com ❤️ para a comunidade
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Copy button
+        document.querySelectorAll('pre').forEach(block => {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'code-block';
+            block.parentNode.insertBefore(wrapper, block);
+            wrapper.appendChild(block);
+            
+            const button = document.createElement('button');
+            button.className = 'copy-btn';
+            button.textContent = '📋 Copiar';
+            button.onclick = () => {
+                const code = block.textContent;
+                navigator.clipboard.writeText(code).then(() => {
+                    button.textContent = '✅ Copiado!';
+                    setTimeout(() => {
+                        button.textContent = '📋 Copiar';
+                    }, 2000);
+                });
+            };
+            wrapper.appendChild(button);
+        });
+
+        // Highlight current section
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav a');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.style.background = '';
+                link.style.color = '';
+                if (link.getAttribute('href') === '#' + current) {
+                    link.style.background = 'linear-gradient(135deg, #667eea, #764ba2)';
+                    link.style.color = 'white';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
